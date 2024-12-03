@@ -16,3 +16,4 @@ urllib3            1.26.12
 webdrivermanager   0.10.0     
 wheel              0.37.1 
 python             3.10.6
+icecream           2.1.3
