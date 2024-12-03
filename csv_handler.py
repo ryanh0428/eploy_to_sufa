@@ -30,6 +30,7 @@ Suppose we have a CSV file (`example.csv`) with the following content:
 
 """
 import csv
+from icecream import ic
 
 def preprocess_file(file_path):
     """
@@ -192,4 +193,4 @@ def restructure_to_key_value_pair(input_list:list):
             
             
 
-print(read_csv(r'.\data\Test Data for Eploy-Sufa Testing(Australia).csv'))
+ic(read_csv(r'.\data\Test Data for Eploy-Sufa Testing(Australia).csv'))
