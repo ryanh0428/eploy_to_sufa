@@ -1,0 +1,92 @@
+# Byte-compiled files
+*.py[cod]
+__pycache__/
+*.so
+
+# Distribution/Packaging
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+*.whl
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.nox/
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.coveragerc
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# My editor/IDE temporary files
+*.swp
+*.swo
+
+# Local configuration files
+*.env
+*.local
+
+# Logs
+*.log
+*.out
+*.err
+
+# Generated files
+*.sqlite3
+*.db
+*.log
+*.bak
+
+# Compiled binaries
+*.dll
+*.dylib
+*.exe
+
+# Miscellaneous
+*.tmp
+*.lock
+*.migrate
+
+# Custom project files
+data/
+logs/
