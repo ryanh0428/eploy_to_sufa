@@ -90,3 +90,5 @@ Desktop.ini
 # Custom project files
 data/
 logs/
+
+eploy/
