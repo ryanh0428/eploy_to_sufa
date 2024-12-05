@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from eploy_login_page import EployLoginPage
+from icecream import ic
 # from test_data import login_password, login_name, eploy_url
 # Add the parent directory of the current script to sys.path
 import sys
@@ -13,6 +14,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from test_data import login_password, login_name, eploy_url
 
 from time import sleep
+import difflib
 class EployDashboardPage():
     def __init__(self,driver:WebDriver, test_data:dict):
         self.driver = driver
@@ -38,37 +40,16 @@ class EployDashboardPage():
         # vancancies_tab = WebDriverWait(top_list,10).until(EC.visibility_of_element_located((self.vacancy)))
         # vancancies_tab.click()
         # Check if the element is in the DOM
-        element_exists = self.driver.execute_script("return document.getElementById('toplist') != null;")
-        if element_exists:
-            print("toplist is in the DOM.")
-        else:
-            print("toplist is not in the DOM yet.")
-        element_exists = self.driver.execute_script("return document.getElementById('SearchIframe') != null;")
-        if element_exists:
-            print("SearchIframe is in the DOM.")
-        else:
-            print("SearchIframe is not in the DOM yet.")
         table = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.search_iframe))
         self.driver.switch_to.frame(table)
-        top_list = WebDriverWait(self.driver,15).until(EC.presence_of_element_located((self.top_list)))
+        top_list = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((self.top_list)))
         vancancies_tab = WebDriverWait(top_list,10).until(EC.visibility_of_element_located((self.vacancy)))
         vancancies_tab.click()
         hong_kong_link = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((self.hk_programe_link)))
         hong_kong_link.click()
-        # element_exists = self.driver.execute_script("return document.getElementById('statusbar') != null;")
-        # if element_exists:
-        #     print("statusbar is in the DOM.")
-        # else:
-        #     print("statusbar is not in the DOM yet.")
-            
-        # element_exists = self.driver.execute_script("return document.getElementById('ViewLiveBtn') != null;")
-        # if element_exists:
-        #     print("ViewLiveBtn is in the DOM.")
-        # else:
-        #     print("ViewLiveBtn is not in the DOM yet.")
-        view_live_button = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((self.view_live)))
+        self.driver.execute_script("return document.body.innerHTML;")
+        view_live_button = WebDriverWait(self.driver,10).until(EC.presence_of_element_located(self.view_live))
         view_live_button.click()
-        sleep(10)
         
         
         
