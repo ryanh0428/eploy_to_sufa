@@ -24,11 +24,13 @@ class HkGraduateProgramApplyPage():
         
     def click_accept_policy(self) -> None:
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.accept_policy)).click()
+        sleep(5)
         
     def click_apply_button(self) -> None:
         # self.driver.execute_script("return document.body.innerHTML;")
         apply_button = WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.id_apply_button))
         apply_button.click()
+
         
 if __name__ == '__main__':
     from eploy_login_page import EployLoginPage
