@@ -52,7 +52,7 @@ class EployDashboardPage():
         self.driver = driver
         self.search_box = (By.ID, 'QuickSearchKeyword')
         self.vacancy = (By.PARTIAL_LINK_TEXT, 'Vacancies')
-        self.hk_programe_link = (By.XPATH, "//a[contains(text(), 'Software')]")
+        self.hk_programe_link = (By.XPATH, ".//a[contains(text(), 'Software')]")
         self.search_code = test_data.get('Vacancy ID')
         self.top_list = (By.CLASS_NAME,'c-quicksearch__top')
         self.search_iframe = (By.ID, 'SearchIframe')
