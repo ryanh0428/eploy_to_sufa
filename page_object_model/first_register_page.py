@@ -160,10 +160,11 @@ if __name__ == '__main__':
     eploy_login_page.provide_login_password()
     eploy_login_page.click_submit_button()
     from eploy_dashboard_page import EployDashboardPage
-    eploy_dashboard_page = EployDashboardPage(driver,{'Vacancy ID':'497'})
+    eploy_dashboard_page = EployDashboardPage(driver,{'Vacancy ID':'1121', 'Role': 'Germany - Recruiter','Initial':'RH'})
+    eploy_dashboard_page.switch_role()
     eploy_dashboard_page.search_for_vacancy_code()
     eploy_dashboard_page.click_on_vancancies_tab()
-    from hk_graduate_program_apply_page import HkGraduateProgramApplyPage
+    from page_object_model.program_apply_page import HkGraduateProgramApplyPage
     hk_graduate_program_apply_page = HkGraduateProgramApplyPage(driver)
     hk_graduate_program_apply_page.switch_to_hk_graduate_program_tab()
     hk_graduate_program_apply_page.click_accept_policy()

@@ -3,17 +3,19 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
 from icecream import ic
 from time import sleep
 
-class HkGraduateProgramApplyPage():
+
+class ProgramApplyPage():
     def __init__(self,driver:WebDriver) -> None:
         self.driver = driver
         self.apply_button = (By.LINK_TEXT, 'Apply')
         self.id_apply_button = (By.ID, 'ctl00_ctl00_topContent_title_LnkApplySticky')
         self.accept_policy = (By.ID, 'epdsubmit')
         
-    def switch_to_hk_graduate_program_tab(self)-> None:
+    def switch_to_program_tab(self)-> None:
         original_tab = self.driver.current_window_handle
         ic(original_tab)
         windows = self.driver.window_handles
@@ -41,12 +43,13 @@ if __name__ == '__main__':
     eploy_login_page.provide_login_password()
     eploy_login_page.click_submit_button()
     from eploy_dashboard_page import EployDashboardPage
-    eploy_dashboard_page = EployDashboardPage(driver,{'Vacancy ID':'497'})
+    eploy_dashboard_page = EployDashboardPage(driver,{'Vacancy ID':'1121', 'Role': 'Germany - Recruiter','Initial':'RH'})
+    eploy_dashboard_page.switch_role()
     eploy_dashboard_page.search_for_vacancy_code()
     eploy_dashboard_page.click_on_vancancies_tab()
-    hk_graduate_program_apply_page = HkGraduateProgramApplyPage(driver)
-    hk_graduate_program_apply_page.switch_to_hk_graduate_program_tab()
-    hk_graduate_program_apply_page.click_accept_policy()
-    hk_graduate_program_apply_page.click_apply_button()
+    program_apply_page = ProgramApplyPage(driver)
+    program_apply_page.switch_to_program_tab()
+    program_apply_page.click_accept_policy()
+    program_apply_page.click_apply_button()
     sleep(5)
     
