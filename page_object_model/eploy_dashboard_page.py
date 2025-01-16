@@ -4,7 +4,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from icecream import ic
+from icecream import ic as print
+from selenium.webdriver.common.action_chains import ActionChains
 # from test_data import login_password, login_name, eploy_url
 # Add the parent directory of the current script to sys.path
 import sys
@@ -52,12 +53,18 @@ class EployDashboardPage():
         self.driver = driver
         self.search_box = (By.ID, 'QuickSearchKeyword')
         self.vacancy = (By.PARTIAL_LINK_TEXT, 'Vacancies')
-        self.hk_programe_link = (By.XPATH, ".//a[contains(text(), 'Software')]")
+        self.first_programe_link = (By.XPATH, "//tr[contains(@class, 'datamenutablefirstrow')]/td[2]")
+        self.avatar_initial = test_data.get('Initial')
         self.search_code = test_data.get('Vacancy ID')
+        self.recruiter_role = test_data.get('Role')
         self.top_list = (By.CLASS_NAME,'c-quicksearch__top')
         self.search_iframe = (By.ID, 'SearchIframe')
         self.hong_kong_software_gp = (By.ID, '_yuiResizeMonitor')
         self.view_live = (By.ID, 'ViewLiveBtn')
+        self.avatar_div = (By.XPATH, '//form/div[4]') #//*[@id="aspnetForm"]/div[4]
+        self.switch_role_button = (By.XPATH, '//span[text()="Switch Role"]')
+        self.roles_list = (By.XPATH, '//*[@id="ctl00_AdminTopBar1_dropDownAnchor_menu"]')
+        
         
         
                 
@@ -82,6 +89,7 @@ class EployDashboardPage():
         Example:
             dashboard_page.search_for_vacancy_code()
         """
+        sleep(1)
         search_box_element = WebDriverWait(self.driver,15).until(EC.element_to_be_clickable((self.search_box)))
         search_box_element.send_keys(self.search_code)
         search_box_element.send_keys(Keys.RETURN)
@@ -112,19 +120,31 @@ class EployDashboardPage():
         """
         table = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.search_iframe))
         self.driver.switch_to.frame(table)
-        top_list = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((self.top_list)))
+        top_list = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((self.top_list)))
         vancancies_tab = WebDriverWait(top_list,10).until(EC.visibility_of_element_located((self.vacancy)))
         vancancies_tab.click()
-        hong_kong_link = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((self.hk_programe_link)))
-        hong_kong_link.click()
+        first_link = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((self.first_programe_link)))
+        first_link.click()
         self.driver.execute_script("return document.body.innerHTML;")
-        view_live_button = WebDriverWait(self.driver,10).until(EC.presence_of_element_located(self.view_live))
+        view_live_button = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located(self.view_live))
         view_live_button.click()
         
-        
-        
-        
-        
+    def switch_role(self) -> None:
+        avater_div = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(self.avatar_div))
+        avater = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, f'.//div[text()="{self.avatar_initial}"]')))
+        avater.click()
+        switch_role_button = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.switch_role_button))
+        switch_role_button.click()
+        role_button_xpath = f'//span[text()="{self.recruiter_role}"]'
+        target_role_button = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, role_button_xpath)))
+        ActionChains(self.driver).scroll_to_element(target_role_button)
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(target_role_button)).click()
+        sleep(1)
+        while True:
+            if self.driver.execute_script("return document.readyState") == "complete":
+                break
+            sleep(1)
+
         
 
     
@@ -137,7 +157,7 @@ if __name__ == '__main__':
     eploy_login_page.provide_login_name()
     eploy_login_page.provide_login_password()
     eploy_login_page.click_submit_button()
-    eploy_dashboard_page = EployDashboardPage(driver,{'Vacancy ID':'497'})
+    eploy_dashboard_page = EployDashboardPage(driver,{'Vacancy ID':'1121', 'Role': 'Germany - Recruiter','Initial':'RH'})
+    eploy_dashboard_page.switch_role()
     eploy_dashboard_page.search_for_vacancy_code()
     eploy_dashboard_page.click_on_vancancies_tab()
-    sleep(5)
