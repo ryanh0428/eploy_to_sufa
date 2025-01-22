@@ -26,7 +26,6 @@ class FirstRegisterPage():
         self.confirm_email_field = (By.ID, 'ctl00_ctl00_FormContent_RegistrationHolder_ITSRegistrationControl_Email_Copy1')
         self.password_div = (By.ID, 'div_CanC_Password')
         self.location_button = (By.XPATH, './/label[contains(text(), "Which FDM Location")]/parent::*/following-sibling::div[1]/select')
-        self.location_HK = (By.XPATH, './/div[@title = "Hong Kong"]') #may get it from test_data, let see, first try hard code, if it is working, we get it dynmaically
         self.currently_working_div = (By.ID, 'div_CanC_IsEmployee')
         self.previously_working_div = (By.ID, 'div_CanC_IsPreviousEmployee')
         self.interested_stream_box = (By.CSS_SELECTOR, 'div#div_Question_9_271 Select')
@@ -164,9 +163,9 @@ if __name__ == '__main__':
     eploy_dashboard_page.switch_role()
     eploy_dashboard_page.search_for_vacancy_code()
     eploy_dashboard_page.click_on_vancancies_tab()
-    from page_object_model.program_apply_page import HkGraduateProgramApplyPage
-    hk_graduate_program_apply_page = HkGraduateProgramApplyPage(driver)
-    hk_graduate_program_apply_page.switch_to_hk_graduate_program_tab()
+    from page_object_model.program_apply_page import ProgramApplyPage
+    hk_graduate_program_apply_page = ProgramApplyPage(driver)
+    hk_graduate_program_apply_page.switch_to_program_tab()
     hk_graduate_program_apply_page.click_accept_policy()
     hk_graduate_program_apply_page.click_apply_button()
     first_register_page = FirstRegisterPage(driver,{'First name': 'F_Name_HK_4', 'Last Name':'L_Name_HK_4','Email Address': 'Eploy.TestHK1401@fdmgroup.com','Currently Working':'NO'})

@@ -139,7 +139,7 @@ class EployDashboardPage():
         target_role_button = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, role_button_xpath)))
         ActionChains(self.driver).scroll_to_element(target_role_button)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(target_role_button)).click()
-        sleep(1)
+        sleep(5)
         while True:
             if self.driver.execute_script("return document.readyState") == "complete":
                 break
