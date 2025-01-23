@@ -17,27 +17,28 @@ from icecream import ic as print
 class GermanyPersonalDetailPage(): #may use inheritance for other region??
     def __init__(self,driver:WebDriver, test_data:dict):
         self.driver = driver
-        # self.timezone_save_button = (By.XPATH, './/*[@id="ctl00_FlagSelector_ctl00_btnContinue"]')
-        self.timezone_save_button = (By.ID, 'ctl00_FlagSelector_ctl00_btnContinue')
+        self.timezone_save_button = (By.XPATH, './/*[@value="Save"]')
+        # self.timezone_save_button = (By.ID, 'ctl00_FlagSelector_ctl00_btnContinue')
         self.timezone_save_button_outside_div = (By.XPATH, './/*[@id="fancybox-container-1"]/div[2]/div[1]/div')
         self.title_box = (By.XPATH, './/label[contains(text(),"Title")]/parent::div/following-sibling::div[1]/select')
         self.country_box = (By.XPATH, './/label[contains(text(),"Country")]/parent::div/following-sibling::div[1]/select')
+        self.hear_about = (By.XPATH, '//label[contains(text(), "hear about")]/parent::div/following-sibling::div[1]/select')
         self.title = test_data.get('Title')
         self.test_data = test_data
         self.work_permit_yes_button = (By.XPATH, './/label[text()="Yes"]/preceding-sibling::input[1]')
-        self.next_button = (By.XPATH, './/input[@value = "Next" and @class = "button"]')
+        self.next_button = (By.XPATH, './/input[@value = "Next"]')
         self.actions = ActionChains(driver)
 
     def click_submit_if_presented(self) -> None:
-        
+        sleep(5)
+        self.driver.execute_script("return document.body.innerHTML;")
         save_button = self.driver.find_element(*self.timezone_save_button)
-        self.actions.move_to_element(save_button).perform()
         save_button.click()
 
 
         
     def construct_input_field_tuple(self,question_key) -> tuple:
-        return (By.XPATH, f'//label[contains(text(), {question_key})]/parent::div/following-sibling::div[1]/input')
+        return (By.XPATH, f'//label[contains(text(), "{question_key}")]/parent::div/following-sibling::div[1]/input')
     
     def select_title(self)->None:
         title_option = Select(WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.title_box)))
@@ -61,6 +62,11 @@ class GermanyPersonalDetailPage(): #may use inheritance for other region??
         self.actions.scroll_to_element(yes_button)
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(yes_button)).click()
         
+    def pick_hear_about_option(self)->None:
+        hear_about_drop_down = Select(self.driver.find_element(*self.hear_about))
+        self.actions.scroll_to_element(hear_about_drop_down)
+        hear_about_drop_down.select_by_visible_text('FDM Newsletter')
+        
     def click_next_button(self)->None:
         next_button = self.driver.find_element(*self.next_button)
         self.actions.scroll_to_element(next_button)
@@ -69,11 +75,15 @@ class GermanyPersonalDetailPage(): #may use inheritance for other region??
         
         
     def fill_in_text_fields(self):
-        fields_required_list = ['First Name', 'Last Name', 'Mobile Number','Address Line 1','Address Line 2', 'City', 'Postcode']
+        fields_required_list = ['First name', 'Last Name', 'Mobile Number','Address Line 1','Address Line 2', 'City', 'Postcode']
         for field in fields_required_list:
             value = self.test_data.get(field)
+            print(field)
+            print(value)
             if field == 'Mobile Number':
                 self.input_text_field('Mobile',value)
+            elif field == 'First name':
+                self.input_text_field('First Name',value)
             elif field == 'Address Line 1':
                 self.input_text_field('Address line 1',value)
             elif field == 'Address Line 2':
@@ -88,6 +98,7 @@ class GermanyPersonalDetailPage(): #may use inheritance for other region??
 if __name__ == '__main__':
     from eploy_login_page import EployLoginPage
     driver = webdriver.Chrome()
+    driver.implicitly_wait(30)
     eploy_login_page = EployLoginPage(driver)
     eploy_login_page.get_to_the_login_page()
     eploy_login_page.provide_login_name()
@@ -116,3 +127,6 @@ if __name__ == '__main__':
     germany_personal_detail_page.pick_country()
     germany_personal_detail_page.pick_have_permit()
     germany_personal_detail_page.fill_in_text_fields()
+    germany_personal_detail_page.pick_hear_about_option()
+    germany_personal_detail_page.click_next_button()
+    sleep(10)
