@@ -6,22 +6,35 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from test_data import login_password
 from time import sleep
+from icecream import ic as print
 
 class GermanyPersonalDetailPage(): #may use inheritance for other region??
     def __init__(self,driver:WebDriver, test_data:dict):
         self.driver = driver
-        self.title_box = (By.XPATH, '//label[contains(text(),"Title")]/parent::div/following-sibling::div[1]/select')
-        self.country_box = (By.XPATH, '//label[contains(text(),"Country")]/parent::div/following-sibling::div[1]/select')
+        # self.timezone_save_button = (By.XPATH, './/*[@id="ctl00_FlagSelector_ctl00_btnContinue"]')
+        self.timezone_save_button = (By.ID, 'ctl00_FlagSelector_ctl00_btnContinue')
+        self.timezone_save_button_outside_div = (By.XPATH, './/*[@id="fancybox-container-1"]/div[2]/div[1]/div')
+        self.title_box = (By.XPATH, './/label[contains(text(),"Title")]/parent::div/following-sibling::div[1]/select')
+        self.country_box = (By.XPATH, './/label[contains(text(),"Country")]/parent::div/following-sibling::div[1]/select')
         self.title = test_data.get('Title')
         self.test_data = test_data
-        self.work_permit_yes_button = (By.XPATH, 'label[text()="Yes"]/preceding-sibling::input[1]')
-        self.next_button = (By.XPATH, '//input[@value = "Next" and @class = "button"]')
+        self.work_permit_yes_button = (By.XPATH, './/label[text()="Yes"]/preceding-sibling::input[1]')
+        self.next_button = (By.XPATH, './/input[@value = "Next" and @class = "button"]')
         self.actions = ActionChains(driver)
+
+    def click_submit_if_presented(self) -> None:
+        
+        save_button = self.driver.find_element(*self.timezone_save_button)
+        self.actions.move_to_element(save_button).perform()
+        save_button.click()
+
+
         
     def construct_input_field_tuple(self,question_key) -> tuple:
         return (By.XPATH, f'//label[contains(text(), {question_key})]/parent::div/following-sibling::div[1]/input')
@@ -90,4 +103,16 @@ if __name__ == '__main__':
     hk_graduate_program_apply_page.switch_to_program_tab()
     hk_graduate_program_apply_page.click_accept_policy()
     hk_graduate_program_apply_page.click_apply_button()
-    from page_object_model.
+    from page_object_model.program_login_page import ProgramLoginPage
+    program_login_page = ProgramLoginPage(driver)
+    program_login_page.switch_to_register_iframe()
+    program_login_page.click_the_login_tab()
+    program_login_page.give_username()
+    program_login_page.give_password()
+    program_login_page.click_login_button()
+    germany_personal_detail_page = GermanyPersonalDetailPage(driver,{'Title': 'Mr', 'Country': 'Germany', 'First name': 'F_Name_De_4','Last Name':'L_Name_De_4', 'Mobile Number' : '123455667','Address Line 1': 'Test Line 1','Address Line 2' : 'Test Line 2', 'City': 'Frankfurt', 'Postcode':'56789'})
+    germany_personal_detail_page.click_submit_if_presented()
+    germany_personal_detail_page.select_title()
+    germany_personal_detail_page.pick_country()
+    germany_personal_detail_page.pick_have_permit()
+    germany_personal_detail_page.fill_in_text_fields()

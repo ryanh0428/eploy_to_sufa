@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\ryanh\Desktop\eploy_to_sufa\eploy
+set VIRTUAL_ENV=C:\Users\ryanh\OneDrive\桌面\eploy_m\eploy_to_sufa\eploy
 
 if not defined PROMPT set PROMPT=$P$G
 
