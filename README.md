@@ -18,4 +18,7 @@ wheel              0.37.1
 python             3.10.6
 icecream           2.1.3
 
-make a change
+Exception and solution
+No Python at '"C:\Users\user\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe' error
+find the python.exe - for me it is C:\Users\user\AppData\Local\Programs\Python\Python310
+replaced the link on pyvenv.cfg
