@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
-# from test_data import login_password, login_name, eploy_url
+# from test_data import login_password, login_napythonme, eploy_url
 # Add the parent directory of the current script to sys.path
 import sys
 import os
