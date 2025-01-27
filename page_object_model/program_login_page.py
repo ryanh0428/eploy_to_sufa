@@ -39,7 +39,7 @@ class ProgramLoginPage():
         
     def click_login_button(self) -> None:
         self.driver.find_element(*self.login_button).click()
-        sleep(10)
+        sleep(1)
 
 if __name__ == '__main__':
     from eploy_login_page import EployLoginPage
