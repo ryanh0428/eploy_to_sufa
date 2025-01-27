@@ -94,4 +94,6 @@ logs/
 eploy/
 test_data.py
 git-filter-repo
-ss
+csv_handler.py
+
+eploy/pyvenv.cfg
