@@ -50,6 +50,7 @@ if __name__ == '__main__':
     from page_object_model.germany_personal_detail_page import GermanyPersonalDetailPage
     germany_personal_detail_page = GermanyPersonalDetailPage(driver,{'Title': 'Mr', 'Country': 'Germany', 'First name': 'F_Name_De_4','Last Name':'L_Name_De_4', 'Mobile Number' : '123455667','Address Line 1': 'Test Line 1','Address Line 2' : 'Test Line 2', 'City': 'Frankfurt', 'Postcode':'56789'})
     germany_personal_detail_page.click_submit_if_presented()
+    germany_personal_detail_page.click_accept_button()
     germany_personal_detail_page.select_title()
     germany_personal_detail_page.pick_country()
     germany_personal_detail_page.pick_have_permit()
