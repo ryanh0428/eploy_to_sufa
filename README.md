@@ -22,3 +22,5 @@ Exception and solution
 No Python at '"C:\Users\user\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe' error
 find the python.exe - for me it is C:\Users\user\AppData\Local\Programs\Python\Python310
 replaced the link on pyvenv.cfg
+
+make changes
