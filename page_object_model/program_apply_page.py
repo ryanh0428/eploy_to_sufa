@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-from icecream import ic
+from icecream import ic as print
 from time import sleep
 
 
@@ -17,16 +17,35 @@ class ProgramApplyPage():
         
     def switch_to_program_tab(self)-> None:
         original_tab = self.driver.current_window_handle
-        ic(original_tab)
         windows = self.driver.window_handles
-        ic(windows)
         new_tab = [handle for handle in windows if handle != original_tab][0]
-        ic(new_tab)
         self.driver.switch_to.window(new_tab)
         
     def click_accept_policy(self) -> None:
-        WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.accept_policy)).click()
-        sleep(5)
+        
+            accept_button = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located(self.accept_policy))
+            sleep(3)
+            accept_button.click()
+            sleep(3)
+            print(self.driver.execute_script("return document.readyState") == 'complete')
+            # x = 0
+            # while True:
+            #     sleep(2)
+            #     print(self.driver.execute_script("return document.readyState"))
+            #     if self.driver.execute_script("return document.readyState") == 'complete':
+            #         accept_button.click()
+            #     x += 1
+            #     if x == 10:
+            #         break
+
+            
+        # WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.accept_policy)).click()
+        # sleep(2)
+        # while True:
+        #     if self.driver.execute_script("return document.readyState") == "complete":
+        #         break
+        #     sleep(1)
+        # WebDriverWait(self.driver,15).until(EC.invisibility_of_element_located(self.accept_policy))
         
     def click_apply_button(self) -> None:
         # self.driver.execute_script("return document.body.innerHTML;")

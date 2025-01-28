@@ -31,9 +31,9 @@ class GermanyPersonalDetailPage(): #may use inheritance for other region??
         self.actions = ActionChains(driver)
 
     def click_submit_if_presented(self) -> None:
-        sleep(5)
+        sleep(6)
         self.driver.execute_script("return document.body.innerHTML;")
-        save_button = self.driver.find_element(*self.timezone_save_button)
+        save_button = WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.timezone_save_button))
         save_button.click()
 
     def click_accept_button(self)->None:
@@ -134,7 +134,7 @@ if __name__ == '__main__':
     program_login_page.click_login_button()
     germany_personal_detail_page = GermanyPersonalDetailPage(driver,{'Title': 'Mr', 'Country': 'Germany', 'First name': 'F_Name_De_4','Last Name':'L_Name_De_4', 'Mobile Number' : '123455667','Address Line 1': 'Test Line 1','Address Line 2' : 'Test Line 2', 'City': 'Frankfurt', 'Postcode':'56789'})
     germany_personal_detail_page.click_submit_if_presented()
-    germany_personal_detail_page.click_accept_button()
+    # germany_personal_detail_page.click_accept_button()
     germany_personal_detail_page.select_title()
     germany_personal_detail_page.pick_country()
     germany_personal_detail_page.pick_have_permit()

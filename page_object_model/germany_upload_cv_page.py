@@ -1,30 +1,44 @@
 from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select, WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
-from time import sleep
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from test_data import cv_path
+from time import sleep
 
-class GermanyAcademicBackgroundPage():
+class GermanyUploadCvPage():
     def __init__(self,driver:WebDriver):
         self.driver = driver
-        self.academic_level = (By.XPATH, './/label[contains(text(),"dungsabsch")]/parent::div/following-sibling::div/select')
-        self.other_qualification = (By.XPATH, './/legend[contains(text(),"weitere Bildungsabsch")]/following-sibling::div//label[contains(text(),"Nein")]')
+        self.pick_option = (By.XPATH, './/label[contains(text(),"hier deinen Lebenslauf")]/parent::div/following-sibling::div/select')
+        self.upload_cv_button = (By.XPATH, './/button[text() = "Upload CV"]')
+        self.upload_iframe = (By.XPATH, './/iframe[@title="Upload CV"]')
+        self.file_box = (By.XPATH, './/input[@type="file"]')
+        self.upload_file_button = (By.XPATH, './/input[@value = "Upload File"]')
         self.next_button = (By.XPATH, './/input[@value = "Next"]')
-
-    def click_the_academic_level(self):
-        academic_level_select = Select(WebDriverWait(self.driver,10).until(EC.presence_of_element_located(self.academic_level)))
-        academic_level_select.select_by_visible_text('Abitur')
-
-    def select_no_for_other_qualification(self):
-        self.driver.find_element(*self.other_qualification).click()
-
+        
+    def pick_upload_option(self):
+        upload_option = Select(WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.pick_option)))
+        upload_option.select_by_visible_text('Upload New')
+        
+    def click_upload_cv_button(self):
+        upload_cv_button = WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.upload_cv_button))
+        upload_cv_button.click()
+        
+    def provide_upload_file_path(self):
+        upload_iframe = WebDriverWait(self.driver,10).until(EC.presence_of_element_located(self.upload_iframe))
+        self.driver.switch_to.frame(upload_iframe)
+        WebDriverWait(self.driver,10).until(EC.presence_of_element_located(self.file_box)).send_keys(cv_path)
+        # upload_iframe.find_element(*self.file_box).send_keys(cv_path)
+        WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(self.upload_file_button)).click()
+        # upload_iframe.find_element(*self.upload_file_button).click()
+        
     def click_the_next_button(self):
+        self.driver.switch_to.default_content()
         self.driver.find_element(*self.next_button).click()
-
+        
 if __name__ == '__main__':
     from eploy_login_page import EployLoginPage
     driver = webdriver.Chrome()
@@ -64,10 +78,14 @@ if __name__ == '__main__':
     from page_object_model.click_next_page import ClickNextPage
     click_next_page = ClickNextPage(driver)
     click_next_page.click_next_button()
+    from page_object_model.germany_academic_background_page import GermanyAcademicBackgroundPage
     germany_academic_background_page = GermanyAcademicBackgroundPage(driver)
     germany_academic_background_page.click_the_academic_level()
     germany_academic_background_page.select_no_for_other_qualification()
     germany_academic_background_page.click_the_next_button()
-    sleep(15)
-
-
+    germany_upload_cv_page = GermanyUploadCvPage(driver)
+    germany_upload_cv_page.pick_upload_option()
+    germany_upload_cv_page.click_upload_cv_button()
+    germany_upload_cv_page.provide_upload_file_path()
+    germany_upload_cv_page.click_the_next_button()
+    sleep(5)
