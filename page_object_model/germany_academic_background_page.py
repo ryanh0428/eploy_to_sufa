@@ -10,19 +10,66 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class GermanyAcademicBackgroundPage():
     def __init__(self,driver:WebDriver):
+        """
+        Represents the Germany academic background section of the registration process.
+
+        This class provides methods to interact with form elements related to academic qualifications.
+
+        Attributes:
+            driver (WebDriver): Selenium WebDriver instance for interacting with the web page.
+
+            academic_level (tuple): Locator for the academic level dropdown.
+            other_qualification (tuple): Locator for selecting 'No' in the 'Other Qualification' section.
+            next_button (tuple): Locator for the 'Next' button to proceed to the next step.
+        """
         self.driver = driver
         self.academic_level = (By.XPATH, './/label[contains(text(),"dungsabsch")]/parent::div/following-sibling::div/select')
         self.other_qualification = (By.XPATH, './/legend[contains(text(),"weitere Bildungsabsch")]/following-sibling::div//label[contains(text(),"Nein")]')
         self.next_button = (By.XPATH, './/input[@value = "Next"]')
 
     def click_the_academic_level(self):
+        """
+        Selects 'Abitur' as the academic qualification level from a dropdown.
+
+        This method:
+        1. Waits until the academic level dropdown is present in the DOM.
+        2. Uses Selenium's Select class to choose 'Abitur' from the dropdown.
+
+        Raises:
+            TimeoutException: If the academic level dropdown does not appear within the timeout.
+            NoSuchElementException: If the dropdown is not found in the DOM.
+            ElementNotInteractableException: If the dropdown is present but not interactable.
+            UnexpectedTagNameException: If the located element is not a <select> element.
+        """
         academic_level_select = Select(WebDriverWait(self.driver,10).until(EC.presence_of_element_located(self.academic_level)))
         academic_level_select.select_by_visible_text('Abitur')
 
     def select_no_for_other_qualification(self):
+        """
+        Selects 'No' for the 'Other Qualification' question.
+
+        This method:
+        1. Locates the 'Other Qualification' option.
+        2. Clicks to select the 'No' option.
+
+        Raises:
+            NoSuchElementException: If the 'Other Qualification' option is not found in the DOM.
+            ElementNotInteractableException: If the option is present but not clickable.
+        """
         self.driver.find_element(*self.other_qualification).click()
 
     def click_the_next_button(self):
+        """
+        Clicks the 'Next' button to proceed to the next step in the registration process.
+
+        This method:
+        1. Locates the 'Next' button.
+        2. Clicks the button to navigate to the next page.
+
+        Raises:
+            NoSuchElementException: If the 'Next' button is not found in the DOM.
+            ElementNotInteractableException: If the button is present but not clickable.
+        """
         self.driver.find_element(*self.next_button).click()
 
 if __name__ == '__main__':

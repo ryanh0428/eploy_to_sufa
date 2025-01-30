@@ -10,12 +10,33 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 class ClickNextPage():
+    """
+    A class that represents a webpage with a 'Next' button and provides a method to click it.
+
+    This class initializes a Selenium WebDriver instance, defines the locator for the 
+    'Next' button, and sets up an ActionChains object for performing actions such as 
+    scrolling to the element before interacting with it.
+
+    Attributes:
+        driver (WebDriver): The Selenium WebDriver instance controlling the browser.
+        next_button (tuple): A locator tuple (By.XPATH) for identifying the 'Next' button.
+        actions (ActionChains): An instance of ActionChains for performing advanced user interactions.
+    """
     def __init__(self,driver:WebDriver)->None:
         self.driver = driver
         self.next_button = (By.XPATH, './/input[@value = "Next"]')
         self.actions = ActionChains(driver)
         
     def click_next_button(self)->None:
+        """
+        Scrolls to the 'Next' button and clicks it when it becomes clickable.
+
+        This method locates the 'Next' button, ensures it is visible in the viewport using 
+        the ActionChains `scroll_to_element`, waits until it is clickable, and then clicks it.
+
+        Raises:
+            TimeoutException: If the button does not become clickable within the timeout period.
+        """
         next_button = self.driver.find_element(*self.next_button)
         self.actions.scroll_to_element(next_button)
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(next_button)).click()
