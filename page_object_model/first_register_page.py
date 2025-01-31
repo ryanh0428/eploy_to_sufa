@@ -307,7 +307,7 @@ class FirstRegisterPage():
         span_in_button.click()
         search_box = WebDriverWait(uni_select_div,10).until(EC.presence_of_element_located(self.general_search_box_locator))
         search_box.send_keys('Hong Kong Baptist University')
-        bu_box = WebDriverWait(uni_select_div,10).until(EC.presence_of_element_located((By.XPATH,'.//span[contains(text(), "Hong Kong Baptist University"]')))
+        bu_box = WebDriverWait(uni_select_div,10).until(EC.presence_of_element_located((By.XPATH,'.//span[contains(text(), "Hong Kong Baptist University")]')))
         bu_box.click()
         
     def select_graduation_month(self) -> None:

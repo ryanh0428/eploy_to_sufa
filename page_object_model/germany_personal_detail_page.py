@@ -74,6 +74,7 @@ class GermanyPersonalDetailPage(): #may use inheritance for other region??
         WebDriverWait(self.driver,10).until(EC.element_to_be_clickable(yes_button)).click()
         
     def pick_hear_about_option(self)->None:
+        sleep(10)
         hear_about_drop_down = Select(self.driver.find_element(*self.hear_about))
         self.actions.scroll_to_element(hear_about_drop_down)
         hear_about_drop_down.select_by_visible_text('FDM Newsletter')
