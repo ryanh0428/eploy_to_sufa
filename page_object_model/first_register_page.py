@@ -352,6 +352,7 @@ class FirstRegisterPage():
         search_box.send_keys('2020')
         year_box = WebDriverWait(graduation_year, 10).until(EC.visibility_of_element_located((By.XPATH, './/li//span[text() = "2020"]')))
         year_box.click()
+        WebDriverWait(graduation_year,10).until(EC.presence_of_element_located((By.XPATH,'.//span[text() = "2020"]')))
         
     def provide_major(self) -> None:
         """

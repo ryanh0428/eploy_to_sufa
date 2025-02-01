@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -25,7 +26,8 @@ class DeclarationPage():
         
 if __name__ == '__main__':
     from page_object_model.eploy_login_page import EployLoginPage
-    driver = webdriver.Chrome()
+    service = Service(r'C:\Users\ryan_work\Documents\GitHub\eploy_to_sufa\chromedriver-win64\chromedriver.exe')
+    driver = webdriver.Chrome(service=service)
     driver.implicitly_wait(30)
     eploy_login_page = EployLoginPage(driver)
     eploy_login_page.get_to_the_login_page()
@@ -43,7 +45,7 @@ if __name__ == '__main__':
     hk_graduate_program_apply_page.click_accept_policy()
     hk_graduate_program_apply_page.click_apply_button()
     from page_object_model.first_register_page import FirstRegisterPage
-    first_register_page = FirstRegisterPage(driver,{'First name': 'F_Name_De_12', 'Last Name':'L_Name_De_12','Email Address': 'Eploy.TestDe3101_De_12@fdmgroup.com','Currently Working':'NO','Country':'Germany'})
+    first_register_page = FirstRegisterPage(driver,{'First name': 'F_Name_0102_De_3', 'Last Name':'L_Name_0102_De_3','Email Address': 'Eploy.TestDe0102_De_3@fdmgroup.com','Currently Working':'NO','Country':'Germany'})
     first_register_page.switch_to_register_iframe()
     first_register_page.select_fdm_communication()
     first_register_page.select_which_one_box()
@@ -63,7 +65,7 @@ if __name__ == '__main__':
     first_register_page.provide_major()
     first_register_page.click_register_button()
     from page_object_model.germany_personal_detail_page import GermanyPersonalDetailPage
-    germany_personal_detail_page = GermanyPersonalDetailPage(driver,{'Title': 'Mr', 'Country': 'Germany', 'First name': 'F_Name_De_12','Last Name':'L_Name_De_12', 'Mobile Number' : '123455667','Address Line 1': 'Test Line 1','Address Line 2' : 'Test Line 2', 'City': 'Frankfurt', 'Postcode':'56789'})
+    germany_personal_detail_page = GermanyPersonalDetailPage(driver,{'Title': 'Mr', 'Country': 'Germany', 'First name': 'F_Name_0102_De_3','Last Name':'L_Name_0102_De_3', 'Mobile Number' : '123455667','Address Line 1': 'Test Line 1','Address Line 2' : 'Test Line 2', 'City': 'Frankfurt', 'Postcode':'56789'})
     germany_personal_detail_page.click_submit_if_presented()
     # germany_personal_detail_page.click_accept_button()
     germany_personal_detail_page.select_title()
