@@ -1,22 +1,31 @@
 This program run on
-appdirs            1.4.4      
-beautifulsoup4     4.11.1     
-certifi            2022.9.24  
-charset-normalizer 2.1.1      
-colorama           0.4.6      
-idna               3.4        
-lxml               4.9.1      
-pip                22.3       
-requests           2.28.1     
-robotframework     6.0.1      
-setuptools         65.5.0     
-soupsieve          2.3.2.post1
-tqdm               4.64.1     
-urllib3            1.26.12    
-webdrivermanager   0.10.0     
-wheel              0.37.1 
-python             3.10.6
-icecream           2.1.3
+asttokens 3.0.0
+attrs 25.1.0
+certifi 2025.1.31
+cffi 1.17.1
+colorama 0.4.6
+exceptiongroup 1.2.2
+executing 2.2.0
+h11 0.14.0
+icecream 2.1.4
+idna 3.10
+outcome 1.3.0.post0
+pycparser 2.22
+Pygments 2.19.1
+PySocks 1.7.1
+selenium 4.28.1
+setuptools 75.8.0
+sniffio 1.3.1
+sortedcontainers 2.4.0
+trio 0.28.0
+trio-websocket 0.11.1
+typing_extensions 4.12.2
+urllib3 2.3.0
+websocket-client 1.8.0
+wsproto 1.2.0
+python 3.12.8
+chromedriver 132.0.6834.159
+pip 25.0
 
 Exception and solution
 No Python at '"C:\Users\user\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\python.exe' error

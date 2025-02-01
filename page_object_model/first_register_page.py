@@ -338,11 +338,12 @@ class FirstRegisterPage():
         2. Clicks the 'Select' button to open the dropdown.
         3. Enters '2020' into the search box.
         4. Waits for the matching option ('2020') to become visible and selects it.
+        5. Ensures that the selected year ('2020') is present in the dropdown after selection.
 
         Raises:
-            NoSuchElementException: If any required element is not found in the DOM.
+            NoSuchElementException: If any required element (dropdown, button, search box, or option) is not found in the DOM.
             ElementNotInteractableException: If an element is present but not interactable.
-            TimeoutException: If the graduation year option does not become visible in time.
+            TimeoutException: If the graduation year option does not become visible or is not properly selected in time.
         """
         graduation_year = self.driver.find_element(*self.graduation_year_div)
         graduation_year_button = graduation_year.find_element(By.XPATH,'.//button/span[text()="Select"]')
