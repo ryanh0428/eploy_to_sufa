@@ -6,10 +6,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from icecream import ic as print
 from selenium.webdriver.common.action_chains import ActionChains
+
 # from test_data import login_password, login_name, eploy_url
 # Add the parent directory of the current script to sys.path
 import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from utils.common_function import page_toggle
 from time import sleep
 
 class EployDashboardPage():
@@ -64,6 +67,9 @@ class EployDashboardPage():
         self.avatar_div = (By.XPATH, '//form/div[4]') #//*[@id="aspnetForm"]/div[4]
         self.switch_role_button = (By.XPATH, '//span[text()="Switch Role"]')
         self.roles_list = (By.XPATH, '//*[@id="ctl00_AdminTopBar1_dropDownAnchor_menu"]')
+        self.work_on_vacancy_button = (By.XPATH, './/span[text()="Work on Vacancy"]')
+        self.go_to_pipeline_link = (By.XPATH,'.//span[text() = "Go To Pipeline"]')
+
         
         
         
@@ -125,6 +131,8 @@ class EployDashboardPage():
         vancancies_tab.click()
         first_link = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((self.first_programe_link)))
         first_link.click()
+    
+    def click_view_live(self):
         self.driver.execute_script("return document.body.innerHTML;")
         view_live_button = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located(self.view_live))
         view_live_button.click()
@@ -144,6 +152,16 @@ class EployDashboardPage():
             if self.driver.execute_script("return document.readyState") == "complete":
                 break
             sleep(1)
+    
+
+    def click_work_on_vacancy(self) -> None:
+        self.driver.execute_script("return document.body.innerHTML;")
+        work_on_vacancy_button = WebDriverWait(self.driver, 15).until(EC.presence_of_element_located(self.work_on_vacancy_button))
+        work_on_vacancy_button.click()
+
+    def click_go_to_pipeline(self) -> None:
+        go_to_pipeline_link = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(self.go_to_pipeline_link))
+        go_to_pipeline_link.click()
 
         
 
@@ -161,3 +179,7 @@ if __name__ == '__main__':
     eploy_dashboard_page.switch_role()
     eploy_dashboard_page.search_for_vacancy_code()
     eploy_dashboard_page.click_on_vancancies_tab()
+    # eploy_dashboard_page.click_view_live()
+    eploy_dashboard_page.click_work_on_vacancy()
+    eploy_dashboard_page.click_go_to_pipeline()
+

@@ -6,6 +6,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from icecream import ic as print
 from time import sleep
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from utils.common_function import page_toggle
 
 
 class ProgramApplyPage():
@@ -66,8 +70,9 @@ if __name__ == '__main__':
     eploy_dashboard_page.switch_role()
     eploy_dashboard_page.search_for_vacancy_code()
     eploy_dashboard_page.click_on_vancancies_tab()
+    eploy_dashboard_page.click_view_live()
     program_apply_page = ProgramApplyPage(driver)
-    program_apply_page.switch_to_program_tab()
+    page_toggle(driver)
     program_apply_page.click_accept_policy()
     program_apply_page.click_apply_button()
     sleep(5)
