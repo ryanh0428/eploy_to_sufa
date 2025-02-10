@@ -33,3 +33,7 @@ find the python.exe - for me it is C:\Users\user\AppData\Local\Programs\Python\P
 replaced the link on pyvenv.cfg
 
 make changes
+
+Germany Candidate stage from New Application to CTS across pipeline
+New Application > Telephone Interview > Software Engineer > CTS
+ 
